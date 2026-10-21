@@ -13,4 +13,10 @@ public record Payment
     public required int ExpiryYear { get; init; }
     public required string Currency { get; init; }
     public required int Amount { get; init; }
+
+    /// <summary>
+    /// Issued by the bank for authorised payments. Kept for capture, refunds and reconciliation,
+    /// but not returned to the merchant.
+    /// </summary>
+    public string? AuthorizationCode { get; init; }
 }

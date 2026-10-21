@@ -2,6 +2,7 @@ using Microsoft.Extensions.Options;
 
 using PaymentGateway.Api.AcquiringBank;
 using PaymentGateway.Api.Services;
+using PaymentGateway.Api.Validation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton(TimeProvider.System);
+builder.Services.AddSingleton<PaymentRequestValidator>();
 builder.Services.AddSingleton<IPaymentsRepository, InMemoryPaymentsRepository>();
+
+// Scoped rather than singleton: it depends on a typed HttpClient, which must not be held for the app's lifetime.
+builder.Services.AddScoped<PaymentService>();
 
 // Fail at startup rather than on the first payment if the bank settings are missing or invalid.
 builder.Services.AddOptions<AcquiringBankOptions>()
