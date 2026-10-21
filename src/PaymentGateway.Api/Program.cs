@@ -1,3 +1,6 @@
+using Microsoft.Extensions.Options;
+
+using PaymentGateway.Api.AcquiringBank;
 using PaymentGateway.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +13,19 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IPaymentsRepository, InMemoryPaymentsRepository>();
+
+// Fail at startup rather than on the first payment if the bank settings are missing or invalid.
+builder.Services.AddOptions<AcquiringBankOptions>()
+    .Bind(builder.Configuration.GetSection(AcquiringBankOptions.SectionName))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+
+builder.Services.AddHttpClient<IAcquiringBankClient, AcquiringBankClient>((services, client) =>
+{
+    var options = services.GetRequiredService<IOptions<AcquiringBankOptions>>().Value;
+    client.BaseAddress = new Uri(options.BaseUrl);
+    client.Timeout = TimeSpan.FromSeconds(options.TimeoutSeconds);
+});
 
 var app = builder.Build();
 
