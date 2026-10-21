@@ -23,10 +23,8 @@ public class PaymentsController : ControllerBase
     {
         var payment = await _paymentsRepository.GetAsync(id, cancellationToken);
 
-        if (payment is null)
-        {
+        if (payment == null)
             return NotFound();
-        }
 
         return PaymentResponse.FromPayment(payment);
     }
