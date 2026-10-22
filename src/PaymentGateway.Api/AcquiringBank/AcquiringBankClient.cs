@@ -7,7 +7,7 @@ namespace PaymentGateway.Api.AcquiringBank;
 
 /// <summary>
 /// Talks to the acquiring bank over HTTP. Requests are never retried automatically: a payment
-/// authorisation is not idempotent, so sending it twice could charge the shopper twice.
+/// authorization is not idempotent, so sending it twice could charge the shopper twice.
 /// </summary>
 public class AcquiringBankClient : IAcquiringBankClient
 {
@@ -37,7 +37,7 @@ public class AcquiringBankClient : IAcquiringBankClient
         var bankResponse = await ReadResponseAsync(response, cancellationToken);
 
         if (bankResponse == null || bankResponse.Authorized == null)
-            throw new AcquiringBankException("The acquiring bank response did not say whether the payment was authorised.");
+            throw new AcquiringBankException("The acquiring bank response did not say whether the payment was authorized.");
 
         return new BankAuthorizationResult
         {
@@ -58,7 +58,7 @@ public class AcquiringBankClient : IAcquiringBankClient
         }
         catch (TaskCanceledException exception)
         {
-            // Cancelled by our caller, for example because the merchant disconnected: not a bank failure.
+            // Canceled by our caller, for example because the merchant disconnected: not a bank failure.
             if (cancellationToken.IsCancellationRequested)
                 throw;
 

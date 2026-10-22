@@ -32,7 +32,7 @@ public class AcquiringBankClientTests
     }
 
     [Fact]
-    public async Task ReturnsAnAuthorisationWithItsCode()
+    public async Task ReturnsAnAuthorizationWithItsCode()
     {
         // Arrange
         var handler = new StubBankHandler(HttpStatusCode.OK, """{"authorized":true,"authorization_code":"0bb07405-6d44-4b50-a14f-7ae0beff13ad"}""");
@@ -118,7 +118,7 @@ public class AcquiringBankClientTests
     }
 
     [Fact]
-    public async Task LetsTheCallersCancellationThrough()
+    public async Task DoesNotTreatTheCallersCancellationAsABankFailure()
     {
         // Arrange
         var handler = new StubBankHandler(neverResponds: true);

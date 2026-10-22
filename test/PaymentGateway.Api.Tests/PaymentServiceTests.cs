@@ -9,7 +9,7 @@ public class PaymentServiceTests
 {
     // The API tests cover what the merchant sees. This one checks what is stored, which the API never shows in full.
     [Fact]
-    public async Task StoresOnlyTheLastFourCardDigitsAndKeepsTheAuthorisationCode()
+    public async Task StoresTheBankOutcomeWithOnlyTheLastFourCardDigits()
     {
         // Arrange
         var repository = new InMemoryPaymentsRepository();

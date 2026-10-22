@@ -15,7 +15,7 @@ public record Payment
     public required int Amount { get; init; }
 
     /// <summary>
-    /// Issued by the bank for authorised payments. Kept for capture, refunds and reconciliation,
+    /// Issued by the bank for authorized payments. Kept for capture, refunds and reconciliation,
     /// but not returned to the merchant.
     /// </summary>
     public string? AuthorizationCode { get; init; }

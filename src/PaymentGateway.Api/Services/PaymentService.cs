@@ -37,7 +37,7 @@ public class PaymentService
         };
 
         // Once the bank has decided, the payment must be recorded even if the merchant has gone away,
-        // otherwise an authorised payment would exist at the bank with no trace of it here.
+        // otherwise an authorized payment would exist at the bank with no trace of it here.
         await _paymentsRepository.AddAsync(payment, CancellationToken.None);
 
         _logger.LogInformation(

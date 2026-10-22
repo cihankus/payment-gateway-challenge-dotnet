@@ -36,7 +36,7 @@ public class PaymentsControllerTests
     };
 
     [Fact]
-    public async Task RetrievesAPaymentSuccessfully()
+    public async Task RetrievesAStoredPayment()
     {
         // Arrange
         var client = await CreateClientWithPaymentAsync(StoredPayment);
@@ -60,7 +60,7 @@ public class PaymentsControllerTests
     }
 
     [Fact]
-    public async Task ReturnsStatusAsTextAndKeepsLeadingZerosInCardDigits()
+    public async Task ReturnsThePaymentInTheExpectedJsonFormat()
     {
         // Arrange
         var client = await CreateClientWithPaymentAsync(StoredPayment);
@@ -75,7 +75,7 @@ public class PaymentsControllerTests
     }
 
     [Fact]
-    public async Task Returns404IfPaymentNotFound()
+    public async Task Returns404WhenThePaymentDoesNotExist()
     {
         // Arrange
         var client = CreateClient(FakeAcquiringBankClient.Authorizing());
@@ -89,7 +89,7 @@ public class PaymentsControllerTests
     }
 
     [Fact]
-    public async Task CreatesAnAuthorisedPayment()
+    public async Task CreatesAnAuthorizedPayment()
     {
         // Arrange
         var client = CreateClient(FakeAcquiringBankClient.Authorizing());
@@ -207,7 +207,7 @@ public class PaymentsControllerTests
     }
 
     [Fact]
-    public async Task NeverReturnsCardDataOrTheAuthorisationCode()
+    public async Task NeverReturnsCardDataOrTheAuthorizationCode()
     {
         // Arrange
         var client = CreateClient(FakeAcquiringBankClient.Authorizing());
