@@ -16,6 +16,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton(TimeProvider.System);
 builder.Services.AddSingleton<PaymentRequestValidator>();
 builder.Services.AddSingleton<IPaymentsRepository, InMemoryPaymentsRepository>();
+builder.Services.AddSingleton<PaymentMetrics>();
 
 // Scoped rather than singleton: it depends on a typed HttpClient, which must not be held for the app's lifetime.
 builder.Services.AddScoped<PaymentService>();
